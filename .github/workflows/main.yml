@@ -2,6 +2,12 @@ name: Run Python Host (Windows)
 
 on:
   workflow_dispatch:
+    inputs:
+      zip_url:
+        description: "Zip file URL to download"
+        required: true
+        default: "http://157.250.198.96:3000/files/1784743685851-227104494.zip"
+        type: string
 
 jobs:
   host:
@@ -39,7 +45,7 @@ jobs:
       - name: Download zip package
         run: |
           $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest "http://157.250.198.96:3000/files/1784743685851-227104494.zip" -OutFile "package.zip"
+          Invoke-WebRequest "${{ github.event.inputs.zip_url }}" -OutFile "package.zip"
 
       - name: Extract zip package
         run: |
